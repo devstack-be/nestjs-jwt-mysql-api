@@ -32,6 +32,7 @@ export class UsersController {
     return res.status(HttpStatus.OK).json(users);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Post()
   async addUser(@Res() res, @Body() createUserDto: CreateUserDto) {
     const newUser = await this.userService.create(createUserDto);
@@ -40,13 +41,13 @@ export class UsersController {
       user: newUser,
     });
   }
-
+@UseGuards(JwtAuthGuard)
   @Get(':id')
   async getUser(@Res() res, @Param('id') userId) {
     const user = await this.userService.findOne({ where: { id: userId } });
     return res.status(HttpStatus.OK).json(user);
   }
-
+  @UseGuards(JwtAuthGuard)
   @Delete(':id')
   async deleteUser(@Res() res, @Param('id') userId) {
     await this.userService.remove(userId);
@@ -54,7 +55,7 @@ export class UsersController {
       message: 'User has been deleted successfully!',
     });
   }
-
+  @UseGuards(JwtAuthGuard)
   @Patch(':id')
   async editUser(
     @Res() res,
@@ -66,7 +67,7 @@ export class UsersController {
       message: 'User has been updated successfully!',
     });
   }
-
+  @UseGuards(JwtAuthGuard)
   @Post('/avatar/:id')
   @UseInterceptors(
     FileInterceptor('avatar', {
@@ -75,6 +76,9 @@ export class UsersController {
         filename: editFileName,
       }),
       fileFilter: imageFileFilter,
+      limits: {
+        fileSize: Math.pow(1024, 2)
+      }
     }),
   )
   uploadAvatar(@UploadedFile() file: Express.Multer.File) {
