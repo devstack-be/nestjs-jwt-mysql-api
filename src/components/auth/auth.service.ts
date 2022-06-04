@@ -11,12 +11,16 @@ export class AuthService {
   ) {}
 
   async validateUser(email: string, pass: string): Promise<any> {
-    const user = await this.usersService.findOne({ where: { email: email } });
-    if (!user) return null;
+    const user = await this.usersService.findOne({
+      where: { email: email },
+      select: ['id', 'password'],
+    });
+    if (!user || !user.password) return null;
     const validPassword = await bcrypt.compare(pass, user.password);
-    if (user && validPassword) {
-      const { password, ...result } = user;
-      return result;
+    if (validPassword) {
+      return await this.usersService.findOne({
+        where: { id: user.id },
+      });
     }
     return null;
   }
@@ -32,7 +36,7 @@ export class AuthService {
       },
     };
     return {
-      user: payload.user,
+      user: req.user,
       access_token: this.jwtService.sign(payload),
     };
   }

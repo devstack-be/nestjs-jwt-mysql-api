@@ -34,4 +34,10 @@ export class UsersService {
     console.log(updateUserDto)
     await this.usersRepository.update(id, updateUserDto);
   }
+
+  async editAvatar(id: string, fileName: string): Promise<void> {
+    await this.usersRepository.update(id, {
+      avatar: fileName,
+    });
+  }
 }
