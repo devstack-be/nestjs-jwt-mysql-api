@@ -14,11 +14,14 @@ export class Users {
   @Column()
   username: string;
 
-  @Column({ nullable: true })
+  @Column({ nullable: true, default: null })
   firstname: string;
 
-  @Column({ nullable: true })
+  @Column({ nullable: true, default: null })
   lastname: string;
+
+  @Column({ nullable: true, default: null })
+  avatar: string;
 
   @Column({ type: 'boolean', default: true })
   is_active: boolean;
