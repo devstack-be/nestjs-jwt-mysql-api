@@ -1,6 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 import { Books as Book } from 'src/components/books/entities/book.entity';
-import { Exclude } from 'class-transformer';
+
 @Entity()
 export class Users {
   @PrimaryGeneratedColumn('increment')
@@ -9,7 +9,7 @@ export class Users {
   @Column({ unique: true })
   email: string;
 
-  @Column({select: false})
+  @Column({ select: false })
   password: string;
 
   @Column()

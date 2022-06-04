@@ -41,7 +41,7 @@ export class UsersController {
       user: newUser,
     });
   }
-@UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @Get(':id')
   async getUser(@Res() res, @Param('id') userId) {
     const user = await this.userService.findOne({ where: { id: userId } });
@@ -77,15 +77,18 @@ export class UsersController {
       }),
       fileFilter: imageFileFilter,
       limits: {
-        fileSize: Math.pow(1024, 2)
-      }
+        fileSize: Math.pow(1024, 2),
+      },
     }),
   )
-  uploadAvatar(@UploadedFile() file: Express.Multer.File) {
-    const response = {
-      originalname: file.originalname,
-      filename: file.filename,
-    };
-    return response;
+  async uploadAvatar(
+    @Res() res,
+    @Param('id') userId,
+    @UploadedFile() file: Express.Multer.File,
+  ) {
+    await this.userService.editAvatar(userId, file.filename);
+    return res.status(HttpStatus.OK).json({
+      message: 'Avatar has been uploaded successfully!',
+    });
   }
 }
