@@ -18,6 +18,8 @@ import { JwtAuthGuard } from '../auth/guard/jwt-auth.guard';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UsersService } from './users.service';
+import { diskStorage } from 'multer';
+import { editFileName, imageFileFilter } from 'src/utils/file-upload.utils';
 
 @Controller('users')
 export class UsersController {
@@ -66,8 +68,20 @@ export class UsersController {
   }
 
   @Post('/avatar/:id')
-  @UseInterceptors(FileInterceptor('avatar'))
+  @UseInterceptors(
+    FileInterceptor('avatar', {
+      storage: diskStorage({
+        destination: './uploads/avatars',
+        filename: editFileName,
+      }),
+      fileFilter: imageFileFilter,
+    }),
+  )
   uploadAvatar(@UploadedFile() file: Express.Multer.File) {
-    console.log(file);
+    const response = {
+      originalname: file.originalname,
+      filename: file.filename,
+    };
+    return response;
   }
 }

@@ -10,9 +10,13 @@ import { Books } from './components/books/entities/book.entity';
 import { AuthModule } from './components/auth/auth.module';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { AuthInterceptor } from './interceptor/auth.interceptor';
+import { MulterModule } from '@nestjs/platform-express';
 
 @Module({
   imports: [
+    MulterModule.register({
+      dest: './uploads',
+    }),
     ConfigModule.forRoot({
       isGlobal: true,
     }),
