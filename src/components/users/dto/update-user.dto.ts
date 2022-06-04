@@ -1,4 +1,10 @@
-import { IsNotEmpty, IsBoolean, IsEmail, Allow } from 'class-validator';
+import {
+  IsNotEmpty,
+  IsBoolean,
+  IsEmail,
+  IsString,
+  IsOptional,
+} from 'class-validator';
 export class UpdateUserDto {
   @IsEmail()
   email: string;
@@ -9,9 +15,11 @@ export class UpdateUserDto {
   @IsBoolean()
   is_active: boolean;
 
-  @Allow()
+  @IsString()
+  @IsOptional()
   firstname: string;
 
-  @Allow()
+  @IsString()
+  @IsOptional()
   lastname: string;
 }
