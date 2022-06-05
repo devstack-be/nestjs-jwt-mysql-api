@@ -5,6 +5,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { Users as User } from './entities/user.entity';
 import * as bcrypt from 'bcrypt';
+import { RegisterUserDto } from './dto/register-user-dto';
 
 @Injectable()
 export class UsersService {
@@ -21,7 +22,7 @@ export class UsersService {
     return await this.usersRepository.findOne(data);
   }
 
-  async create(createUserDto: CreateUserDto): Promise<User> {
+  async create(createUserDto: CreateUserDto | RegisterUserDto): Promise<User> {
     createUserDto.password = await bcrypt.hash(createUserDto.password, 10);
     return this.usersRepository.save(createUserDto);
   }
