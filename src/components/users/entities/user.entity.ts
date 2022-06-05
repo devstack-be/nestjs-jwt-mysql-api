@@ -21,9 +21,6 @@ export class Users {
   @Column({ nullable: true, default: null })
   lastname: string;
 
-  @Column()
-  testee: string;
-
   @Column({ nullable: true, default: null })
   avatar: string;
 
