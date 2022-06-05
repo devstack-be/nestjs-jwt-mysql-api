@@ -5,8 +5,6 @@ import { AppService } from './app.service';
 import { Users } from './components/users/entities/user.entity';
 import { UsersModule } from './components/users/users.module';
 import { ConfigModule } from '@nestjs/config';
-import { BooksModule } from './components/books/books.module';
-import { Books } from './components/books/entities/book.entity';
 import { AuthModule } from './components/auth/auth.module';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { AuthInterceptor } from './interceptor/auth.interceptor';
@@ -21,12 +19,11 @@ import { MulterModule } from '@nestjs/platform-express';
       isGlobal: true,
     }),
     TypeOrmModule.forRoot({
-      entities: [Users, Books],
+      entities: [Users],
       synchronize: false,
     }),
     AuthModule,
     UsersModule,
-    BooksModule,
   ],
   controllers: [AppController],
   providers: [

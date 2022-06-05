@@ -14,7 +14,7 @@ export class UsersService {
   ) {}
 
   findAll(): Promise<User[]> {
-    return this.usersRepository.find({ relations: ['books'] });
+    return this.usersRepository.find();
   }
 
   async findOne(data: number | any): Promise<User | undefined> {

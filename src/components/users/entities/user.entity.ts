@@ -1,5 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
-import { Books as Book } from 'src/components/books/entities/book.entity';
+//import { Books as Book } from 'src/components/books/entities/book.entity';
 
 @Entity()
 export class Users {
@@ -21,6 +21,9 @@ export class Users {
   @Column({ nullable: true, default: null })
   lastname: string;
 
+  @Column()
+  testee: string;
+
   @Column({ nullable: true, default: null })
   avatar: string;
 
@@ -33,6 +36,6 @@ export class Users {
   @Column({ type: 'datetime', default: null })
   updated_at?: Date;
 
-  @OneToMany(() => Book, (book) => book.user)
-  books?: Book[];
+/*   @OneToMany(() => Book, (book) => book.user)
+  books?: Book[]; */
 }
